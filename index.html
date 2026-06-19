@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎂 Rainbow Birthday Card Creator 🎂</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(
+        135deg,
+        #ff0000,
+        #ff7f00,
+        #ffff00,
+        #00ff00,
+        #00ffff,
+        #0000ff,
+        #8b00ff
+    );
+    background-size:400% 400%;
+    animation:rainbow 12s ease infinite;
+    padding:30px;
+}
+
+@keyframes rainbow{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    text-align:center;
+    color:white;
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:3rem;
+    text-shadow:3px 3px 10px rgba(0,0,0,.4);
+}
+
+.header p{
+    font-size:1.2rem;
+    margin-top:10px;
+}
+
+.main{
+    display:grid;
+    grid-template-columns:350px 1fr;
+    gap:30px;
+}
+
+.form-box{
+    background:rgba(255,255,255,.95);
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    height:fit-content;
+}
+
+.form-box h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#ff1493;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:12px;
+    background:#f2f2f2;
+    font-size:1rem;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:1.1rem;
+    font-weight:bold;
+    color:white;
+    background:linear-gradient(
+        90deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet
+    );
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.cards-area{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    animation:slideIn .5s ease;
+}
+
+@keyframes slideIn{
+    from{
+        opacity:0;
+        transform:translateY(-30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.card-inside{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:300px;
+}
+
+.left{
+    background:linear-gradient(
+        135deg,
+        #ff4d6d,
+        #ffb703,
+        #70e000,
+        #00b4d8,
+        #9d4edd
+    );
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:25px;
+}
+
+.left h2{
+    font-size:2rem;
+}
+
+.left .emoji{
+    font-size:5rem;
+    margin:15px 0;
+}
+
+.right{
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.right h3{
+    color:#ff1493;
+    margin-bottom:15px;
+}
+
+.message{
+    font-size:1.15rem;
+    line-height:1.8;
+}
+
+.signature{
+    margin-top:25px;
+    font-weight:bold;
+    color:#555;
+}
+
+@media(max-width:900px){
+
+.main{
+    grid-template-columns:1fr;
+}
+
+.card-inside{
+    grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🎉 Magical Rainbow Birthday Card Factory 🎉</h1>
+        <p>Create hilarious personalized birthday cards instantly!</p>
+    </div>
+
+    <div class="main">
+
+        <div class="form-box">
+            <h2>🎂 Create Card</h2>
+
+            <input type="text" id="name" placeholder="Enter Name">
+
+            <input type="number" id="age" placeholder="Enter Age">
+
+            <input type="text" id="hobby" placeholder="Enter Hobby">
+
+            <button onclick="createCard()">
+                ✨ Generate Birthday Card ✨
+            </button>
+        </div>
+
+        <div class="cards-area" id="cardsArea">
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const messages = [
+`Congratulations! At AGE years old you're now officially experienced enough to give advice nobody asked for.`,
+
+`Rumor has it that your HOBBY skills are so impressive that even Google searches YOU for help.`,
+
+`Scientists have confirmed that every birthday adds wisdom. You're now dangerously knowledgeable.`,
+
+`Breaking News: NAME has reached level AGE! New abilities unlocked: louder sighs and stronger opinions.`,
+
+`Experts say people who enjoy HOBBY are 87% more awesome. The other 13% is birthday cake.`,
+
+`Your birthday cake requested extra candles because it wanted a challenge.`,
+
+`The older you get, the closer you are to becoming a legendary collector of random facts.`,
+
+`Warning: AGE-year-old birthday star detected. Excessive fun expected today!`
+];
+
+function createCard(){
+
+    const name = document.getElementById("name").value.trim();
+    const age = document.getElementById("age").value.trim();
+    const hobby = document.getElementById("hobby").value.trim();
+
+    if(!name || !age || !hobby){
+        alert("Please fill all fields!");
+        return;
+    }
+
+    let msg =
+        messages[Math.floor(Math.random()*messages.length)];
+
+    msg = msg
+        .replaceAll("NAME",name)
+        .replaceAll("AGE",age)
+        .replaceAll("HOBBY",hobby);
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+        <div class="card-inside">
+
+            <div class="left">
+                <div class="emoji">🎂🎉</div>
+                <h2>Happy Birthday<br>${name}!</h2>
+                <p>Turning ${age}</p>
+            </div>
+
+            <div class="right">
+                <h3>💌 Birthday Message</h3>
+
+                <div class="message">
+                    ${msg}
+                    <br><br>
+                    May your year be filled with happiness,
+                    laughter, cake, and unlimited success!
+                    🎈✨
+                </div>
+
+                <div class="signature">
+                    With Birthday Magic ❤️
+                </div>
+            </div>
+
+        </div>
+    `;
+
+    const area = document.getElementById("cardsArea");
+
+    // NEW CARD ON TOP, OLD ONES STAY BELOW
+    area.prepend(card);
+
+    document.getElementById("name").value="";
+    document.getElementById("age").value="";
+    document.getElementById("hobby").value="";
+}
+
+</script>
+
+</body>
+</html>
